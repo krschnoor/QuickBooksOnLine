@@ -1,0 +1,28 @@
+<div style="font-size:large;margin-top:-30px;width: 100%; height: 75vh; min-height:75vh; " ng-class="main" class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading" >
+        <h3>Select Date Range for Dash Board Download:
+          <span style="font-size:smaller;padding:5px;margin-left:5px;background-color:white"
+           class="error-message" ng-show="DBform.client.$error.pattern  || DBform.client.$error.required">
+           <span style="padding:5px" class="glyphicon glyphicon-warning-sign" />No Common$ents Client Selected!</span>
+        </h3>
+      </div>
+       <form name="DBform"   ng-submit="getDashBoard()">
+        <input style="display:none" name="client"  ng-pattern="/[^No\sClient\sOpen]/" name="client"  ng-required="true" ng-model="selectedClient.name" />
+         <div class="panel-body"  style="height: 75vh; min-height:75vh; padding:20px" >
+           <div >
+            <span style="padding:10px" >Date Start:</span><input name="ds"  ng-required="true" type="date" ng-model="dateStartDB.dt" ng-change="setDateStartDB()">  
+            <span style="padding:10px">Date End:</span><input  name="de"  ng-required="true" type="date" ng-model="dateEndDB.dt" ng-change="setDateEndDB()">  
+            <button ng-disabled="DBform.$invalid || en" style="margin-left:10px;margin-top:5px;height:35px;font-size:large; font-weight:bold " class="glyphicon glyphicon-import" type="submit" >Generate</button>
+           </div>
+           <div>
+            <input style="display:none" value="{{dateDiffTB}}" name="dd" ng-pattern="/^[0-9]{1,7}$/" ng-required="true" ng-model="dateDiffDB" />
+            <span style="display:block;margin:20px;width:50%;font-size:1em" class="error-message" ng-show="DBform.ds.$error.required"><span style="padding:5px" class="glyphicon glyphicon-warning-sign" />Date Start is Required!</span>
+            <span style="display:block;margin:20px;width:50%;font-size:1em" class="error-message" ng-show="DBform.de.$error.required"><span style="padding:5px" class="glyphicon glyphicon-warning-sign" />Date End is Required!</span>
+            <span style="display:block;margin:20px;width:50%;font-size:1em" class="error-message"  ng-show="DBform.dd.$error.pattern || TBform.dd.$error.required"><span style="padding:5px" class="glyphicon glyphicon-warning-sign" />Date Range is Invalid!</span>
+           
+           </div>   
+         </div>
+       </form>
+    </div>
+</div>

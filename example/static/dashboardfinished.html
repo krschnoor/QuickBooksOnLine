@@ -1,0 +1,605 @@
+<html>
+
+<head>
+  <style>
+
+  </style>
+
+</head>
+
+<body>
+  <div style="font-size:smaller;margin-top:-15px;width: 100%; height: 89vh; min-height:89vh; overflow-y: auto" ng-class="main" class="container container-fluid col-md-12"
+    autoscroll="true">
+    <div class="panel-group">
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3>Common$entsOL DashBoard View: &nbsp;
+            <span ng-model="tbDateStart.dt">{{tbDateStart.dt | date: mmm-dd-yyyy}} </span>
+          </h3>
+        </div>
+
+        <div   class="panel-body" >
+
+
+          <span ng-model="selectedClient">{{selectedClient.name}}</span>
+          <span style="margin-left:10px">
+                    <span>Select Year:</span>
+          <select ng-model="dbyear.year" ng-change="">  
+                    <option  ng-repeat="y in dbyears"  value="{{y}}" >{{y}}</option>
+                    </select>
+          <span ng-init="mth">Select Month:</span>
+          <select ng-model="dbmonth.month" ng-change="mth=m">  
+                    <option  ng-repeat="m in dbmonths"  value="{{m}}" >{{m}}</option>
+                    </select> {{mth}}
+          </span>
+          <br/>
+          <table>
+            <tr>
+              <td style="padding: 15px">
+                <table class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">January</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",1,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",1,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",1,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",1,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",1,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",1,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",1,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",1,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{0 | number:2}}</td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+              <td style="padding: 15px">
+                <table style="border-left: black solid thin" class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">February</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",2,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",2,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",2,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",2,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",2,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",2,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",2,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",2,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",2,"assetliab","gt",2) - getDashboardData("Liability",1,"assetliab","gt",2)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+              <td style="padding: 15px">
+                <table style="border-left: black solid thin" class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">March</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",3,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",3,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",3,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",3,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",3,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",3,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",3,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",3,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",3,"assetliab","gt",3) - getDashboardData("Liability",1,"assetliab","gt",3)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 15px">
+                <table class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">April</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",4,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",4,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",4,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",4,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",4,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",4,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",4,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",4,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",4,"assetliab","gt",4) - getDashboardData("Liability",1,"assetliab","gt",4)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+              <td style="padding: 15px">
+                <table style="border-left: black solid thin" class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">May</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",5,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",5,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",5,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",5,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",5,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",5,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",5,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",5,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",5,"assetliab","gt",5) - getDashboardData("Liability",1,"assetliab","gt",5)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+              <td style="padding: 15px">
+                <table style="border-left: black solid thin" class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">June</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",6,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",6,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",6,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",6,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",6,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",6,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",6,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",6,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",6,"assetliab","gt",6) - getDashboardData("Liability",1,"assetliab","gt",6)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 15px">
+                <table class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">July</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",7,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",7,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",7,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",7,"total") | number: 2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",7,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",7,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",7,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",7,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",7,"assetliab","gt",7) - getDashboardData("Liability",1,"assetliab","gt",7)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+              <td style="padding: 15px">
+                <table style="border-left: black solid thin" class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">August</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",8,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",8,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",8,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",8,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",8,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",8,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",8,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",8,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",8,"assetliab","gt",8) - getDashboardData("Liability",1,"assetliab","gt",8)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+              <td style="padding: 15px">
+                <table style="border-left: black solid thin" class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">September</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",9,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",9,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",9,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",9,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",9,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",9,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",9,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",9,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",9,"assetliab","gt",9) - getDashboardData("Liability",1,"assetliab","gt",9)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 15px">
+                <table class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">October</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",10,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",10,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",10,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",10,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",10,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",10,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",10,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",10,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",10,"assetliab","gt",10) - getDashboardData("Liability",1,"assetliab","gt",10)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+              <td style="padding: 15px">
+                <table style="border-left: black solid thin" class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">November</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",11,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",11,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",11,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",11,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",11,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",11,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",11,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",11,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",11,"assetliab","gt",11) - getDashboardData("Liability",1,"assetliab","gt",11)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+              <td style="padding: 15px">
+                <table style="border-left: black solid thin" class="table table-striped table-condensed table-hover ">
+                  <caption style="font-weight:bold">December</caption>
+
+                  <tbody>
+                    <tr>
+                      <td>Cash & Checking</td>
+                      <td align="right">{{getDashboardData("Cash & Checking",12,"ind") | number:2}} </td>
+                    </tr>
+                    <tr>
+                      <td>Accounts Receivable</td>
+                      <td align="right">{{getDashboardData("Receivables",12,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Inventory</td>
+                      <td align="right">{{getDashboardData("Inventory",12,"ind") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Assets</td>
+                      <td align="right">{{getDashboardData("Asset",12,"total") | number:2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Current Liabilities</td>
+                      <td align="right">{{getDashboardData("Current Liabilities",12,"ind") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Long Term Liabilities</td>
+                      <td align="right">{{getDashboardData("Long Term Liability",12,"ltliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Liabilities</td>
+                      <td align="right">{{getDashboardData("Liability",12,"totliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Monthly Balance</td>
+                      <td align="right">{{-getDashboardData("Liability",12,"assetliab") | number:2}}</td>
+                    </tr>
+                    <tr>
+                      <td>Change from January</td>
+                      <td align="right">{{-(getDashboardData("Liability",12,"assetliab","gt",12) - getDashboardData("Liability",1,"assetliab","gt",12)) | number:2}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+   
+  </div>
+  
+</body>
+
+</html>
