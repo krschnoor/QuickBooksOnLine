@@ -238,7 +238,7 @@ $scope.populateDashboardDates = function(){
 
       });
 
-  alert($scope.dbyears.length)
+ 
 }
 
 
