@@ -1,30 +1,30 @@
-var http       = require('http'),
-    port       = process.env.PORT || 3000,
-    request    = require('request'),
-    qs         = require('querystring'),
-    util       = require('util'),
-    bodyParser = require('body-parser'),
-    express    = require('express'),
-    app        = express(),
-    QuickBooks = require('../../index'),
-    session = require('express-session'),
-    config = require('../config.js'),
-    //require('dotenv').config()
-      qbo;
+var http = require('http'),
+  port = process.env.PORT || 3000,
+  request = require('request'),
+  qs = require('querystring'),
+  util = require('util'),
+  bodyParser = require('body-parser'),
+  express = require('express'),
+  app = express(),
+  QuickBooks = require('../../index'),
+  session = require('express-session'),
+  config = require('../config.js'),
+  //require('dotenv').config()
+  qbo;
 
 var consumerKey = config.consumerKey
-  consumerSecret = config.consumerSecret
+consumerSecret = config.consumerSecret
 
 
-exports.getQbConn = function(req,res){
- 
-   console.log("here" +  QuickBooks.APP_CENTER_BASE)
-   res.render('intuit.ejs', {locals: {port:port, appCenter: 'https://appcenter.intuit.com'}})
-   console.log("here")
- }
+exports.getQbConn = function (req, res) {
 
- exports.getToken = function(req,res){
- var postBody = {
+  console.log("here" + QuickBooks.APP_CENTER_BASE)
+  res.render('intuit.ejs', { locals: { port: port, appCenter: 'https://appcenter.intuit.com' } })
+  console.log("here")
+}
+
+exports.getToken = function (req, res) {
+  var postBody = {
     url: QuickBooks.REQUEST_TOKEN_URL,
     oauth: {
       callback: 'http://localhost:' + port + '/callback/',
@@ -41,9 +41,9 @@ exports.getQbConn = function(req,res){
 }
 
 
-exports.getTokenSecret = function(req,res){
+exports.getTokenSecret = function (req, res) {
 
- var postBody = {
+  var postBody = {
     url: QuickBooks.ACCESS_TOKEN_URL,
     oauth: {
       consumer_key: consumerKey,
@@ -69,20 +69,20 @@ exports.getTokenSecret = function(req,res){
       true); // turn debugging on
 
 
-     
-      req.session.qbo = qbo
 
-      req.session.save();
+    req.session.qbo = qbo
+
+    req.session.save();
 
 
-    
+
     console.log("qb saved")
 
-  
-    
 
-    
-   
+
+
+
+
   })
 
 
@@ -93,11 +93,11 @@ exports.getTokenSecret = function(req,res){
 
 
 
-exports.getQBAccounts = function(req,res){
+exports.getQBAccounts = function (req, res) {
 
   !req.session.qbo ? null :
 
-      qbo = new QuickBooks(consumerKey,
+    qbo = new QuickBooks(consumerKey,
       consumerSecret,
       req.session.qbo.token,
       req.session.qbo.tokenSecret,
@@ -105,19 +105,40 @@ exports.getQBAccounts = function(req,res){
       false, // use the Sandbox
       true); // turn debugging on
 
-    
 
-     qbo.findAccounts(function (_, accounts) {
 
-      console.log("here is list")
+  //  qbo.findAccounts(function (_, accounts) {
 
-      accounts.QueryResponse.Account.forEach(function (account) {
-        console.log(account.Id)
-      
-      })
+  //  console.log("here is list")
+
+  // accounts.QueryResponse.Account.forEach(function (account) {
+  //  console.log(account.Id + " " + account.Name)
+
+  // })
+  // })
+
+  qbo.findAccounts({
+
+    desc: 'MetaData.LastUpdatedTime',
+    Active: false
+
+
+  }, function (err, accounts) {
+    accounts.QueryResponse.Account.forEach(function (account) {
+      //console.log(account.Name + " " + account.Id)
+      console.log(account)
+    })
   })
 
- 
+  // qbo.reportAccountListDetail (function (_, accounts) {
+
+  //  console.log("here is list")
+
+  //  accounts.QueryResponse.Account.forEach(function (account) {
+  //    console.log(account)
+
+  // })
+  // })
 
 }
 

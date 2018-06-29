@@ -22,10 +22,11 @@ var consumerKey = config.consumerKey,
 exports.getQBAccounts = function (req, res) {
 
 
- 
-    if( !req.session.qbo ){
-      res.send(500,{status:"No QuickBooks Connection"})
-    }else{
+
+  if (!req.session.qbo) {
+    res.send(500, { status: "No QuickBooks Connection" })
+    return
+  } else {
 
     qbo = new QuickBooks(consumerKey,
       consumerSecret,
@@ -35,28 +36,60 @@ exports.getQBAccounts = function (req, res) {
       false, // use the Sandbox
       true); // turn debugging on
 
+    qbo.findAccounts({
+
+      desc: 'MetaData.LastUpdatedTime',
+      Active: false
 
 
-    qbo.findAccounts(function (_, accounts) {
+    }, function (err, accounts) {
 
+      accountArray = []
+      tb = []
 
-       try {
-          accounts.QueryResponse.Account.forEach(function (account) {
+      try {
+        accounts.QueryResponse.Account.forEach(function (account) {
+          console.log(account)
           accountArray.push({ type: account.Classification, id: account.Id, AccountType: account.AccountType })
-          })
-       } catch (e) { }
-
-      getTrialBalance(req, res, function () {
-
-        store.storeTB(tb, req.query.client, function (status) {
-      
-        res.json(tb)
-        
         })
+      } catch (e) { }
+
+
+
+
+
+
+      qbo.findAccounts({
+
+        desc: 'MetaData.LastUpdatedTime',
+
+
+      }, function (err, accounts) {
+
+
+
+        try {
+          accounts.QueryResponse.Account.forEach(function (account) {
+            console.log(account)
+            accountArray.push({ type: account.Classification, id: account.Id, AccountType: account.AccountType })
+          })
+        } catch (e) { }
+
+        getTrialBalance(req, res, function () {
+
+          store.storeTB(tb, req.query.client, function (status) {
+
+            res.json(tb)
+
+          })
+        })
+
+
       })
 
 
     })
+
 
   }
 
@@ -76,9 +109,9 @@ function getTrialBalance(req, res, callback) {
 
   var timeDiff = (dtEnd.getTime() - dtStart.getTime());
   var difMonths = Math.ceil(timeDiff / (1000 * 3600 * 24 * 30));
-  
-  difMonths >=0 ? null : res.send(500,{status:"Invalid Date Parameters"})
-  
+
+  difMonths >= 0 ? null : res.send(500, { status: "Invalid Date Parameters" })
+
   ticker = difMonths
   console.log("ticker length " + ticker)
   for (ctr = 1; ctr <= difMonths; ctr++) {
@@ -190,7 +223,7 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
       else {
         proceed = false
         ticker -= 1
-        ticker == 0 ? callback():null
+        ticker == 0 ? callback() : null
       }
     }
 
@@ -222,7 +255,7 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
           id = row.ColData[0].id
           debit = row.ColData[1].value
           credit = row.ColData[2].value
-          category = currAccount[0].type
+          category = currAccount[0].type || "Unclassified"
           subtype = currAccount[0].AccountType
           m = month
           d = dy
@@ -238,13 +271,13 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
             type: category,
             date: m + "/" + d + "/" + y,
             subtype: subtype,
-            m:m * 1,
-            d:d * 1,
-            y:y * 1
+            m: m * 1,
+            d: d * 1,
+            y: y * 1
 
           }
 
-          
+
           switch (tbobj.type) {
             case "Asset":
               tbobj.csort = 1
@@ -261,7 +294,9 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
             case "Expense":
               tbobj.csort = 5
               break;
-
+            case "Unclassified":
+              tbobj.csort = 6
+              break;
 
 
           }
@@ -301,7 +336,7 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
 
           if (tbobj.name.indexOf("Inventory") == 0) {
             tbobj.ssort = 3
-         
+
           }
 
 
