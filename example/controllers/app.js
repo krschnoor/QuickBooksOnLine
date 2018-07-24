@@ -27,7 +27,7 @@ exports.getToken = function (req, res) {
   var postBody = {
     url: QuickBooks.REQUEST_TOKEN_URL,
     oauth: {
-      callback: 'http://localhost:' + port + '/callback/',
+      callback: 'http://localhost:' + port + '/callback/', //change to localhost
       consumer_key: consumerKey,
       consumer_secret: consumerSecret
     }

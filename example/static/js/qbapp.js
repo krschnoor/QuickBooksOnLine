@@ -43,7 +43,7 @@ app.controller('CScontroller', ['$scope', '$http', '$location', '$timeout', '$wi
 
   $scope.getQB = function () {
 
-    var x = $window.open('http://localhost:3000/qb')
+    var x = $window.open('http://localhost:3000/qb') //change to localhost
 
     $timeout(function () {
       x.close()

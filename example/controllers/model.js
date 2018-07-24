@@ -18,16 +18,17 @@ exports.storeTB = function (tb, client, callback) {
 
   for (ctr = 0; ctr < tb.length; ctr++) {
 
-    tb[ctr].debit != "" ? amount = tb[ctr].debit * 1 : amount = tb[ctr].credit * 1
+    (tb[ctr].debit * 1 != 0 ) ? amount = tb[ctr].debit * 1 : amount = tb[ctr].credit * 1
+
 
     if (tb[ctr].type == "Asset") {
 
-      if (tb[ctr].debit != '') {
+      if (tb[ctr].debit != 0 ) {
 
         amount = amount
       }
 
-      if (tb[ctr].credit != '') {
+      if (tb[ctr].credit != 0) {
 
         amount = -amount
       }
@@ -37,12 +38,12 @@ exports.storeTB = function (tb, client, callback) {
 
     if (tb[ctr].type == "Liability") {
 
-      if (tb[ctr].debit != '') {
+      if (tb[ctr].debit != 0) {
 
         amount = amount
       }
 
-      if (tb[ctr].credit != '') {
+      if (tb[ctr].credit != 0) {
 
         amount = -amount
       }
@@ -51,12 +52,12 @@ exports.storeTB = function (tb, client, callback) {
 
     if (tb[ctr].type == "Equity") {
 
-      if (tb[ctr].debit != '') {
+      if (tb[ctr].debit != 0) {
 
         amount = amount
       }
 
-      if (tb[ctr].credit != '') {
+      if (tb[ctr].credit != 0) {
 
         amount = -amount
       }
@@ -66,12 +67,12 @@ exports.storeTB = function (tb, client, callback) {
 
     if (tb[ctr].type == "Revenue") {
 
-      if (tb[ctr].debit != '') {
+      if (tb[ctr].debit != 0) {
 
         amount = amount
       }
 
-      if (tb[ctr].credit != '') {
+      if (tb[ctr].credit != 0) {
 
         amount = -amount
       }
@@ -81,12 +82,12 @@ exports.storeTB = function (tb, client, callback) {
 
     if (tb[ctr].type == "Expense") {
 
-      if (tb[ctr].debit != '') {
+      if (tb[ctr].debit != 0) {
 
         amount = amount
       }
 
-      if (tb[ctr].credit != '') {
+      if (tb[ctr].credit != 0) {
 
         amount = -amount
       }
