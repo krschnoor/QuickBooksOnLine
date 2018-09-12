@@ -6,6 +6,122 @@ var dirPath = "O:\\BTR Program\\Client Files\\" //input1.xml
 exports.storeTB = function (tb, client, callback) {
 
 
+
+
+  var plAccounts = [];
+  var id;
+  var idx = 2
+
+
+  
+
+  plAccounts = tb.filter(function (account) {
+
+    return account.type == "Revenue" || account.type == "Expense" || account.subtype == "Revenue" || account.subtype == "Expense"
+
+  })
+
+  plAccounts = plAccounts.sort(function (a, b) {
+    return b.y - a.y;
+  });
+
+  plAccounts = plAccounts.sort(function (a, b) {
+    return b.m - a.m;
+  });
+
+  for (i = 0; i < plAccounts.length; i++) {
+
+    console.log("month " + plAccounts.length + plAccounts[i].m)
+
+
+    var acct = [];
+    var acct2 = [];
+
+
+    acct = tb.filter(function (account) {
+
+      return account.id == plAccounts[i].id && account.y * 1 == plAccounts[i].y * 1 && account.m * 1 == plAccounts[i].m * 1
+
+    })
+
+
+    acct2 = tb.filter(function (account) {
+
+      return account.id == plAccounts[i].id && account.y * 1 == plAccounts[i].y * 1 && account.m * 1 == plAccounts[i].m * 1 - 1
+
+    })
+
+    var dr = 0, cr = 0, dr1 = 0, cr1 = 0
+
+    if (acct.length > 0) {
+
+      dr = acct[0].debit * 1
+      cr = acct[0].credit * 1
+      id = acct[0].id;
+      console.log("account is found " + acct.length + " " + acct[0].name + " " + acct[0].type + " " + acct[0].debit + " " + acct[0].credit + " " + acct[0].date)
+
+
+
+    }
+
+
+    if (acct2.length > 0) {
+
+      dr1 = acct2[0].debit * 1
+      cr1 = acct2[0].credit * 1
+
+      console.log("account2 is found " + acct2.length + " " + acct2[0].name + " " + acct2[0].type + " " + acct2[0].debit + " " + acct2[0].credit + " " + acct2[0].date)
+    }
+
+
+
+    plAccounts[i].debit = dr - dr1
+    plAccounts[i].credit = cr - cr1
+
+    var re = tb.filter(function (account) {
+
+      return account.name.indexOf("Retained Earnings") >= 0 && account.y * 1 == plAccounts[i].y * 1 && account.m * 1 == plAccounts[i].m * 1
+
+    })
+
+    try {
+
+      if (typeof re[0] == "undefined" || typeof re[0].debit == "undefined" || typeof re[0].credit == "undefined") {
+
+        var tbobj = {
+
+          name: "Retained Earnings",
+          id: 20000,
+          debit: dr1 || 0,
+          credit: cr1 || 0,
+          type: "Equity",
+          date: acct[0].m + "/" + acct[0].d + "/" + acct[0].y,
+          subtype: "Equity",
+          m: acct[0].m * 1,
+          d: acct[0].d * 1,
+          y: acct[0].y * 1
+
+        }
+
+        tb.push(tbobj)
+      }
+      else {
+        re[0].debit = re[0].debit * 1 + dr1;
+        re[0].credit = re[0].credit * 1 + cr1;
+      }
+
+    } catch (e) { }
+
+
+
+  }
+
+
+
+
+
+
+
   try {
 
     fs.unlinkSync(dirPath + client + "\\input1.xml");
@@ -13,88 +129,14 @@ exports.storeTB = function (tb, client, callback) {
   } catch (e) { }
 
   var xml = builder.create('InputTable');
-  var amount
+  var amount, dr, cr
 
 
   for (ctr = 0; ctr < tb.length; ctr++) {
 
-    (tb[ctr].debit * 1 != 0 ) ? amount = tb[ctr].debit * 1 : amount = tb[ctr].credit * 1
 
 
-    if (tb[ctr].type == "Asset") {
-
-      if (tb[ctr].debit != 0 ) {
-
-        amount = amount
-      }
-
-      if (tb[ctr].credit != 0) {
-
-        amount = -amount
-      }
-
-    }
-
-
-    if (tb[ctr].type == "Liability") {
-
-      if (tb[ctr].debit != 0) {
-
-        amount = amount
-      }
-
-      if (tb[ctr].credit != 0) {
-
-        amount = -amount
-      }
-
-    }
-
-    if (tb[ctr].type == "Equity") {
-
-      if (tb[ctr].debit != 0) {
-
-        amount = amount
-      }
-
-      if (tb[ctr].credit != 0) {
-
-        amount = -amount
-      }
-
-    }
-
-
-    if (tb[ctr].type == "Revenue") {
-
-      if (tb[ctr].debit != 0) {
-
-        amount = amount
-      }
-
-      if (tb[ctr].credit != 0) {
-
-        amount = -amount
-      }
-
-    }
-
-
-    if (tb[ctr].type == "Expense") {
-
-      if (tb[ctr].debit != 0) {
-
-        amount = amount
-      }
-
-      if (tb[ctr].credit != 0) {
-
-        amount = -amount
-      }
-
-    }
-
-
+    amount = tb[ctr].debit * 1 + tb[ctr].credit * -1
 
 
 

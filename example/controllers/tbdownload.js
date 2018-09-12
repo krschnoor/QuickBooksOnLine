@@ -266,8 +266,8 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
 
             name: name,
             id: id,
-            debit: debit,
-            credit: credit,
+            debit: debit || 0,
+            credit: credit || 0,
             type: category,
             date: m + "/" + d + "/" + y,
             subtype: subtype,

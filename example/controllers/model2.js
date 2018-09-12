@@ -18,54 +18,54 @@ exports.storeTB = function (tb, client, callback) {
 
   for (ctr = 0; ctr < tb.length; ctr++) {
 
-    tb[ctr].debit != "" ? amount = tb[ctr].debit * 1 : amount = tb[ctr].credit * 1
 
-    if (tb[ctr].category == "Asset") {
+    amount = tb[ctr].debit * 1 + tb[ctr].credit * -1
 
-      if (tb[ctr].debit != '') {
+    //tb[ctr].debit != "" ? amount = tb[ctr].debit * 1 : amount = tb[ctr].credit * 1
 
-        amount = amount
-      }
+    //if (tb[ctr].category == "Asset") {
 
-      if (tb[ctr].credit != '') {
+    // if (tb[ctr].debit != '') {
 
-        amount = -amount
-      }
+    //  amount = amount
+    //}
 
-    }
+    // if (tb[ctr].credit != '') {
 
+    //  amount = -amount
+    // }
 
-    if (tb[ctr].category == "Liability") {
-
-      if (tb[ctr].debit != '') {
-
-        amount = amount
-      }
-
-      if (tb[ctr].credit != '') {
-
-        amount = -amount
-      }
-
-    }
-
-    if (tb[ctr].category == "Equity") {
-
-      if (tb[ctr].debit != '') {
-
-        amount = amount
-      }
-
-      if (tb[ctr].credit != '') {
-
-        amount = -amount
-      }
-
-    }
+    //}
 
 
+    // if (tb[ctr].category == "Liability") {
+
+    //  if (tb[ctr].debit != '') {
+
+    //  amount = amount
+    //  }
+
+    //  if (tb[ctr].credit != '') {
+
+    // amount = -amount
+    // }
+
+    //}
+
+    // if (tb[ctr].category == "Equity") {
+
+    // if (tb[ctr].debit != '') {
+
+    //   amount = amount
+    // }
+
+    // if (tb[ctr].credit != '') {
+
+    //  amount = -amount
+    //}
 
 
+    // }
 
 
 

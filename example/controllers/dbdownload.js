@@ -36,7 +36,35 @@ exports.getQBAccounts = function (req, res) {
 
 
 
-  qbo.findAccounts(function (_, accounts) {
+qbo.findAccounts({
+
+      desc: 'MetaData.LastUpdatedTime',
+      Active: false
+
+
+    }, function (err, accounts) {
+
+      accountArray = []
+      tb = []
+
+      try {
+        accounts.QueryResponse.Account.forEach(function (account) {
+          console.log(account)
+          accountArray.push({ type: account.Classification, id: account.Id, AccountType: account.AccountType })
+        })
+      } catch (e) { } })
+
+
+
+
+
+  qbo.findAccounts({
+
+      desc: 'MetaData.LastUpdatedTime',
+    
+
+
+    },function (err, accounts) {
 
 
     try {
@@ -241,6 +269,13 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
 
        console.log("type " + type)
          
+
+     
+
+
+
+
+
     switch (tbobj.type) {
       case "Accounts Receivable": 
        tbobj.name = "Receivables"
@@ -262,8 +297,10 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
        tbobj.name = "Current Liabilities"
        tb.push(tbobj)
        break;
-
-    
+       case "Fixed Asset":
+       tbobj.name = "Fixed Assets"
+       tb.push(tbobj)
+       break;
      
     }
 
@@ -316,11 +353,7 @@ function downLoadTB(dy, month, yrStart, req, res, ctr, difMonths, callback) {
           }  
 
 
-
-
-
-
-
+    
 
 
 
